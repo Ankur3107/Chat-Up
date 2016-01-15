@@ -1,0 +1,21 @@
+{
+  "name": "chatup",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "connect-mongo": "^1.1.0",
+    "cookie-parser": "^1.4.1",
+    "express": "^4.13.3",
+    "express-session": "^1.13.0",
+    "hogan-express": "^0.5.2",
+    "mongoose": "^4.3.5",
+    "passport": "^0.3.2",
+    "passport-facebook": "^2.0.0"
+  }
+}
