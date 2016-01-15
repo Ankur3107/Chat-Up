@@ -1,4 +1,4 @@
-module.exports = function(express,app){
+module.exports = function(express, app , passport){
     
     var router = express.Router();
     
@@ -6,11 +6,36 @@ module.exports = function(express,app){
        res.render('index',{title: 'Welcome to ChatUp'}); 
     });
     
+    function securePages(req , res , next){
+        if(req.isAuthenticated()){
+            next();
+        }
+        else{
+            res.redirect('/');
+        }
+    }
+    
+    router.get('/auth/facebook', passport.authenticate('facebook'), function(req , res ){});
+   /*  router.get('/auth/facebook/callback',passport.authenticate('facebook',{
+        
+        sucessRedirect:'/chatrooms',
+        failureRedirect:'/'
+        
+    })); */
+    
+    app.get('/auth/facebook/callback',
+        passport.authenticate('facebook', { failureRedirect: '/' }),
+        function(req, res) {
+            res.redirect('/chatrooms');
+        });
+ 
+    
+    
     router.get('/chatrooms',function( req ,res,next){
-        res.render('chatrooms',{title:'Chatrooms'});
+        res.render('chatrooms',{title:'Chatrooms' , user : req.user});
         
     });
-    
+    /*
     router.get('/setColor', function(req , res , next){
         req.session.favColor = 'Red';
         res.send('Setting favourite color ...!');
@@ -19,6 +44,12 @@ module.exports = function(express,app){
     router.get('/getColor', function(req , res , next){
         res.send('Favourite Color : ' + (req.session.favColor == undefined?"NOT FOUND":req.session.favColor));
     });
+    */
+    
+    router.get('/logout',function(req , res , next){
+        req.logout();
+        res.redirect('/');
+    })
     
     app.use('/',router);
     

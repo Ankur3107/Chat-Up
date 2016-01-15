@@ -33,7 +33,7 @@ var express = require('express'),
          resave : true, 
          store : new ConnectMongo({
             // url : config.dbURL, (for Avoiding two seperate connection)
-             mongoose_connection:mongoose.connections[0],
+             mongooseConnection:mongoose.connections[0],
              stringify : true
          })
       })); 
@@ -63,9 +63,13 @@ var express = require('express'),
       console.log('Done !');
   })
   */
+  
+  app.use(passport.initialize());
+  app.use(passport.session());
+  
   require('./auth/passportAuth.js')(passport , FacebookStrategy , config , mongoose);
   
-  require('./routes/routes.js')(express,app);
+  require('./routes/routes.js')(express,app ,passport);
    
  
   app.listen (3000 , function(){

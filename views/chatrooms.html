@@ -9,10 +9,10 @@
 </head>
 <body>
 	<div class="cr-container">
-		<h1 class="cr-title">Chatti</h1>
+		<h1 class="cr-title">Chat Up</h1>
 		<div class="cr-userbox">
-			<img src="../images/profilepic.jpg" class="userPic">
-			<h3 class="userName">John Doe | <a href="#">Logout</a></h3>
+			<img src="{{user.profilePic}}" class="userPic">
+			<h3 class="userName">{{user.fullname}} | <a href="/logout">Logout</a></h3>
 		</div>
 		<div class="cr-newroom">
 			<input type="text" class="newRoom" autocomplete="off">
