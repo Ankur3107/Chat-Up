@@ -1,8 +1,8 @@
 var express = require('express'),
     app = express(),
-    path = require('path')
-    cookieParser = require('cookie-parser')
-    session = require('express-session')
+    path = require('path'),
+    cookieParser = require('cookie-parser'),
+    session = require('express-session'),
     config = require('./config/config.js'),
     ConnectMongo = require('connect-mongo')(session),
     mongoose = require('mongoose').connect(config.dbURL),
@@ -78,7 +78,7 @@ var express = require('express'),
     console.log('Mode:'+ env);
  }); */
  
- app.set('port', process.env.PORT || 3000 );
+// app.set('port', process.env.PORT || 3000 );
  
  
  
@@ -88,6 +88,8 @@ var express = require('express'),
  require('./socket/socket.js')(io,rooms);
  
  
- server.listen(app.get('port' , function(){
-     console.log('Chat Up on Port : '+ app.get('port'));
- }))
+ var port = process.env.PORT || 3000;
+  
+  server.listen(port, function () {
+    console.log('Updated : Server listening at port %d', port);
+  });   
