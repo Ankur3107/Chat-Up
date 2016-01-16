@@ -4,7 +4,21 @@
 	<meta charset="UTF-8">
 	<title>Chat Up - Chatrooms</title>
 	<link rel="stylesheet" href="../css/chatroom.css">
+    <script src = "/socket.io/socket.io.js"></script>
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    
+    <script>
+        $(function(){
+            var host = '{{config.host}}';
+            var socket = io.connect(host + '/roomlist'); // http://localhost:3000/roomlist
+            
+            socket.on('connect' , function(){
+                console.log('Connection Established .. !');
+            })
+        })
+        
+    </script>
+    
 	
 </head>
 <body>
