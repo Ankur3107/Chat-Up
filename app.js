@@ -70,7 +70,7 @@ var express = require('express'),
   
   require('./auth/passportAuth.js')(passport , FacebookStrategy , config , mongoose);
   
-  require('./routes/routes.js')(express,app ,passport , config);
+  require('./routes/routes.js')(express,app ,passport , config, rooms);
    
  
  /* app.listen (3000 , function(){
