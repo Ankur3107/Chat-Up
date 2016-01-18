@@ -26,7 +26,7 @@ module.exports = function(io , rooms){
         
         socket.on('newMessage',function(data){
             socket.broadcast.to(data.room_number).emit('messagefeed',JSON.stringify(data));
-        })
+        })  
         
     })
     

@@ -40,7 +40,7 @@ module.exports = function(express, app , passport , config,rooms){
         
         var room_name = findTitle(req.params.id);
         res.render('room',{user:req.user , room_number:req.params.id ,config:config ,room_name: room_name })
-    })
+    });
     
     function findTitle(room_id){
         var n=0;

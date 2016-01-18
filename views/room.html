@@ -3,66 +3,54 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Chatti</title>
-	<link rel="stylesheet" href="../css/room.css">
+	<link rel="stylesheet" href="../css/room.css"> 
 	<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src = "/socket.io/socket.io.js"></script>
 
     <script>
-        
-        $(function(){
-            
-            var host = '{{config.host}}';
-            var messages = io.connect(host + '/messages');
-            var roomNum = '{{room_number}}';
-            var userName = '{{user.fullname}}';
-            var userPic = '{{user.profilePic}}';
-            
-            messages.on('connect',function(){
-                console.log('connnection Establishes..!!');
-                messages.emit('joinroom',{room:roomNum, user:userName, userPic:userPic});
-            })
-            
-            
-            $(document).on('keyup' , '.newmessage',function(e){
-                
-                if(e.which === 13 && $(this).val()!=''){
-                    messages.emit('newMessage',{
-                        
-                        room_number : room_number,
-                        user:userName,
-                        userPic:userPic,
-                        message:$(this),val()
-                        
-                    })
-                    
-                    updateMessageFeed(userPic,$(this).val());
-                }
-                
-            })
-            
-            
-            messages.on('messagefeed',function(data){
-                var msgs = JSON.parse(data);
-                updateMessageFeed(msgs.userPic, msgs.message);
-            })
-            
-            function updateMessageFeed(userPic,message){
-                
-                var str = '<li>';
-					str+='<div class="msgbox">';
-					str+='<div class="pic"><img src="'+userPic+'"></div>';
-					str+='<div class="msg"><p>'+ message + '</p></div>';
-					str+='</div>';
-				    str+='</li>';
-                    
-                 $(str).hide().prependTo($('.messages')).slideDown(100);
-              }
-            
-        })
-        
-        
-    </script>
-    
+		$(function () {
+			var host = '{{config.host}}';
+			var messages = io.connect(host + '/messages');
+			var roomNUM = {{room_number}};
+			var userName = '{{user.fullname}}';
+			var userPic = '{{user.profilePic}}';
+			messages.on('connect', function () {
+				console.log('Connection Established !');
+				messages.emit('joinroom', {room : roomNUM, user : userName, userPic : userPic});
+			});
+			$(document).on('keyup', '.newmessage', function (e) {
+				if(e.which === 13 && $(this).val() != '') {
+					messages.emit('newMessage', {
+						room_number : roomNUM,
+						user : userName,
+						userPic : userPic,
+						message : $(this).val()
+					})
+					//once i am done emitting the message I will run the updateMessageFeed function 
+					updateMessageFeed(userPic, $(this).val() );
+					$(this).val('');
+					
+				}
+			});
+			messages.on('messagefeed', function (data) {
+				var msgs = JSON.parse(data);
+				updateMessageFeed(msgs.userPic, msgs.message)
+			});
+			function updateMessageFeed (userPic, message) {
+				var str = '<li>';
+					str += '<div class="msgbox">';
+					str +=	'<div class="pic"><img src=" '+ userPic + ' "></div>';
+					str +=	'<div class="msg"><p>' + message + '</p></div>';
+					str += '</div>';
+					str += '</li>';
+					//when the template is created I will prepend to 'ul' which is 'messages' class
+					$(str).appendTo($('.messages'));
+					$('.rm-messages').scrollTop($('.rm-messages').prop('scrollHeight'));
+					
+			}
+			
+		});
+	</script>   
 </head>
 <body>
 <div class="rm-container">
